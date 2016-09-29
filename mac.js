@@ -18,11 +18,11 @@ function rename (basePath, oldName, newName, cb) {
 function moveHelpers (frameworksPath, appName, callback) {
   series([' Helper', ' Helper EH', ' Helper NP'].map(function (suffix) {
     return function (cb) {
-      var executableBasePath = path.join(frameworksPath, `Brave${suffix}.app`, 'Contents', 'MacOS')
+      var executableBasePath = path.join(frameworksPath, `Gikix${suffix}.app`, 'Contents', 'MacOS')
 
-      rename(executableBasePath, `Brave${suffix}`, appName + suffix, function (err) {
+      rename(executableBasePath, `Gikix${suffix}`, appName + suffix, function (err) {
         if (err) return cb(err)
-        rename(frameworksPath, `Brave${suffix}.app`, `${appName}${suffix}.app`, cb)
+        rename(frameworksPath, `Gikix${suffix}.app`, `${appName}${suffix}.app`, cb)
       })
     }
   }), function (err) {
@@ -62,22 +62,22 @@ function createSignOpts (properties, platform, app) {
 
 module.exports = {
   createApp: function createApp (opts, templatePath, callback) {
-    var appRelativePath = path.join('Brave.app', 'Contents', 'Resources', 'app')
+    var appRelativePath = path.join('Gikix.app', 'Contents', 'Resources', 'app')
     common.initializeApp(opts, templatePath, appRelativePath, function buildMacApp (err, tempPath) {
       if (err) return callback(err)
 
-      var contentsPath = path.join(tempPath, 'Brave.app', 'Contents')
+      var contentsPath = path.join(tempPath, 'Gikix.app', 'Contents')
       var frameworksPath = path.join(contentsPath, 'Frameworks')
       var appPlistFilename = path.join(contentsPath, 'Info.plist')
-      var helperPlistFilename = path.join(frameworksPath, 'Brave Helper.app', 'Contents', 'Info.plist')
-      var helperEHPlistFilename = path.join(frameworksPath, 'Brave Helper EH.app', 'Contents', 'Info.plist')
-      var helperNPPlistFilename = path.join(frameworksPath, 'Brave Helper NP.app', 'Contents', 'Info.plist')
+      var helperPlistFilename = path.join(frameworksPath, 'Gikix Helper.app', 'Contents', 'Info.plist')
+      var helperEHPlistFilename = path.join(frameworksPath, 'Gikix Helper EH.app', 'Contents', 'Info.plist')
+      var helperNPPlistFilename = path.join(frameworksPath, 'Gikix Helper NP.app', 'Contents', 'Info.plist')
       var appPlist = plist.parse(fs.readFileSync(appPlistFilename).toString())
       var helperPlist = plist.parse(fs.readFileSync(helperPlistFilename).toString())
       var helperEHPlist = plist.parse(fs.readFileSync(helperEHPlistFilename).toString())
       var helperNPPlist = plist.parse(fs.readFileSync(helperNPPlistFilename).toString())
 
-      var badSymlink = path.join(frameworksPath, 'Brave Framework.framework', 'Versions', 'A', 'Libraries', 'Libraries')
+      var badSymlink = path.join(frameworksPath, 'Gikix Framework.framework', 'Versions', 'A', 'Libraries', 'Libraries')
       try {
         fs.unlinkSync(badSymlink)
       } catch(e) {
@@ -179,9 +179,9 @@ module.exports = {
         })
       }
 
-      // Rename the Contents/MacOS/Brave binary
+      // Rename the Contents/MacOS/Gikix binary
       operations.push(function (cb) {
-        rename(path.join(contentsPath, 'MacOS'), 'Brave', appPlist.CFBundleExecutable, cb)
+        rename(path.join(contentsPath, 'MacOS'), 'Gikix', appPlist.CFBundleExecutable, cb)
       })
 
       // Move Helper apps/executables, then top-level .app
