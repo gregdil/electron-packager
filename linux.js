@@ -9,7 +9,7 @@ module.exports = {
     common.initializeApp(opts, templatePath, path.join('resources', 'app'), function buildLinuxApp (err, tempPath) {
       if (err) return callback(err)
       if (path.join(tempPath, 'brave') !== path.join(tempPath, opts.name)) {
-        fs.move(path.join(tempPath, 'brave'), path.join(tempPath, opts.name), function (err) {
+        fs.move(path.join(tempPath, 'gikix'), path.join(tempPath, opts.name), function (err) {
           if (err) return callback(err)
           common.moveApp(opts, tempPath, callback)
         })
